@@ -1,6 +1,6 @@
 package noteoriety.mike73.ie.note_oriety.activity;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,15 +11,16 @@ import noteoriety.mike73.ie.note_oriety.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mNewNoteButton;
+    private static final String TAG = "MainActivity";
+    private static final int WRITE_NOTE_REQUEST_CODE = 333;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mNewNoteButton = (Button) findViewById(R.id.button);
-        mNewNoteButton.setOnClickListener(new View.OnClickListener() {
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startNewActivity(MainActivity.this, WriteNoteActivity.class);
@@ -27,8 +28,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private static void startNewActivity(Context context, Class<?> cls) {
-        Intent intent = new Intent(context, cls);
-        context.startActivity(intent);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == WRITE_NOTE_REQUEST_CODE && requestCode == RESULT_OK) {
+            // activity returned successfully
+        }
+    }
+
+    private static void startNewActivity(Activity activity, Class<?> cls) {
+        Intent intent = new Intent(activity, cls);
+        activity.startActivityForResult(intent, WRITE_NOTE_REQUEST_CODE);
     }
 }
