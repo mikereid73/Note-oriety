@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Note-oriety</string>
+    <string name="enter_title_here">Enter title here...</string>
+    <string name="enter_note_here">Enter note here...</string>
+    <string name="clear_current_note">Clear current note</string>
+    <string name="delete_current_note">Delete current note</string>
 </resources>
