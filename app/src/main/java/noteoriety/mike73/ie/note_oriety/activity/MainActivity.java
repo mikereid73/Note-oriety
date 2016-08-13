@@ -75,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             case R.id.action_delete_all_notes:
                 deleteAllNotes();
                 break;
+            case R.id.action_view_about:
+                Toast.makeText(MainActivity.this, R.string.author_details, Toast.LENGTH_LONG).show();
+                break;
 
             default:
         }
@@ -114,6 +117,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void deleteAllNotes() {
+        if (mNoteCursorAdapter.isEmpty()) {
+            Toast.makeText(MainActivity.this,
+                    R.string.no_notes_to_delete,
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         DialogInterface.OnClickListener dialogClickListener =
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -123,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                             getContentResolver().delete(NoteDataProvider.CONTENT_URI, null, null);
                             restartLoader();
                             Toast.makeText(MainActivity.this,
-                                    "All notes have been deleted",
+                                    R.string.all_notes_deleted,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }

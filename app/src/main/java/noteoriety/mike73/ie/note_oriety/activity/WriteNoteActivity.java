@@ -98,7 +98,7 @@ public class WriteNoteActivity extends AppCompatActivity {
 
         switch (mAction) {
             case Intent.ACTION_INSERT:
-                if (text.length() == 0) {
+                if (title.length() == 0 && text.length() == 0) {
                     setResult(RESULT_CANCELED);
                 } else {
                     insertCurrentNote(title, text);
@@ -106,7 +106,7 @@ public class WriteNoteActivity extends AppCompatActivity {
                 break;
 
             case Intent.ACTION_EDIT:
-                if (text.length() == 0) {
+                if (title.length() == 0 && text.length() == 0) {
                     deleteCurrentNote();
                 } else if (text.equals(mOldText) && title.equals(mOldTitle)) {
                     setResult(RESULT_CANCELED);
