@@ -3,18 +3,15 @@ package noteoriety.mike73.ie.note_oriety.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /**
  * Author: Michael Reid
  * Date: 12/08/2016
- *
+ * <p/>
  * Note: Only working with one table for now, so this should be ok.
- *       Might need to rethink if future add-ons cause problems.
+ * Might need to rethink if future add-ons cause problems.
  */
 public class DBHelper extends SQLiteOpenHelper {
-
-    private static final String TAG = "DBHelper";
 
     private static final String DATABASE_NAME = "noteoriety.db";
     private static final int DATABASE_VERSION = 1;
@@ -47,12 +44,10 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(_SQL_CREATE_TABLE);
-        Log.d(TAG, "DB created");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Do nothing for now
-        Log.d(TAG, "DB updated");
+
     }
 }

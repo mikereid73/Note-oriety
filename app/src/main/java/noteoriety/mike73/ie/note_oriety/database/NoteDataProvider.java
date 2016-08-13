@@ -25,6 +25,7 @@ public class NoteDataProvider extends ContentProvider {
     public static final String CONTENT_ITEM_TYPE = "note";
 
     private static final UriMatcher uriMatcher;
+
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(AUTHORITY, BASE_DIR, NOTES);
@@ -73,7 +74,7 @@ public class NoteDataProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri  uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         return mDatabase.update(DBHelper.TABLE_NAME, values, selection, selectionArgs);
     }
 }

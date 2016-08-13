@@ -48,11 +48,6 @@ public class WriteNoteActivity extends AppCompatActivity {
         if (uri == null) {
             // brand new note
             mAction = Intent.ACTION_INSERT;
-
-            // Show keyboard
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(mTitleEditText, InputMethodManager.SHOW_IMPLICIT);
-            mTitleEditText.requestFocus();
         } else {
             // loading in existing note
             mAction = Intent.ACTION_EDIT;
@@ -73,11 +68,33 @@ public class WriteNoteActivity extends AppCompatActivity {
                 mTitleEditText.setText(title);
                 mNoteTextEditText.setText(text);
             }
-            // Show keyboard
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(mNoteTextEditText, InputMethodManager.SHOW_IMPLICIT);
-            mNoteTextEditText.requestFocus();
+            // Show keyboard for note
+            getKeyboardFocus(mNoteTextEditText);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        switch (mAction) {
+            case Intent.ACTION_INSERT:
+                // Show keyboard for title
+                getKeyboardFocus(mTitleEditText);
+                break;
+            case Intent.ACTION_EDIT:
+                getKeyboardFocus(mNoteTextEditText);
+        }
+    }
+
+    private void getKeyboardFocus(final EditText editText) {
+        editText.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+            }
+        }, 200);
     }
 
     @Override
