@@ -1,7 +1,6 @@
 package noteoriety.mike73.ie.noteoriety.activity;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -9,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -48,6 +46,7 @@ public class WriteNoteActivity extends AppCompatActivity {
         if (uri == null) {
             // brand new note
             mAction = Intent.ACTION_INSERT;
+            mTitleEditText.requestFocus();
         } else {
             // loading in existing note
             mAction = Intent.ACTION_EDIT;
@@ -68,33 +67,8 @@ public class WriteNoteActivity extends AppCompatActivity {
                 mTitleEditText.setText(title);
                 mNoteTextEditText.setText(text);
             }
-            // Show keyboard for note
-            getKeyboardFocus(mNoteTextEditText);
+            mNoteTextEditText.requestFocus();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        switch (mAction) {
-            case Intent.ACTION_INSERT:
-                // Show keyboard for title
-                getKeyboardFocus(mTitleEditText);
-                break;
-            case Intent.ACTION_EDIT:
-                getKeyboardFocus(mNoteTextEditText);
-        }
-    }
-
-    private void getKeyboardFocus(final EditText editText) {
-        editText.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
-            }
-        }, 200);
     }
 
     @Override

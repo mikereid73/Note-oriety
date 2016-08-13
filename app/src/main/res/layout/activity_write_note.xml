@@ -7,7 +7,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".activity.WriteNoteActivity">
+    tools:context=".activity.WriteNoteActivity"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
 
     <EditText
         android:id="@+id/titleEditText"
@@ -30,6 +32,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/titleEditText"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:gravity="top"
         android:hint="@string/enter_note_here"
         android:inputType="textMultiLine|textCapSentences|textAutoComplete|textAutoCorrect" />
