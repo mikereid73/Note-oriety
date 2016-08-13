@@ -17,7 +17,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:hint="@string/enter_title_here"
-        android:inputType="textCapSentences|textAutoComplete" />
+        android:inputType="textCapSentences|textAutoComplete|textAutoCorrect" />
 
     <EditText
         android:id="@+id/noteEditText"
@@ -31,6 +31,6 @@
         android:layout_below="@+id/titleEditText"
         android:gravity="top"
         android:hint="@string/enter_note_here"
-        android:inputType="textCapSentences|textAutoComplete|textAutoCorrect|textMultiLine" />
+        android:inputType="textMultiLine|textCapSentences|textAutoComplete|textAutoCorrect" />
 
 </RelativeLayout>

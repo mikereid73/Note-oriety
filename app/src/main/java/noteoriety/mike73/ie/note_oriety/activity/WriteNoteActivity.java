@@ -1,14 +1,15 @@
 package noteoriety.mike73.ie.note_oriety.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import noteoriety.mike73.ie.note_oriety.R;
 import noteoriety.mike73.ie.note_oriety.database.DBHelper;
@@ -20,13 +21,14 @@ import noteoriety.mike73.ie.note_oriety.database.NoteDataProvider;
  */
 public class WriteNoteActivity extends AppCompatActivity {
 
-    private static final String TAG = "WriteNoteActivity";
     private EditText mTitleTextView;
     private EditText mNoteTextView;
 
-    private String mNoteFilter; // contains 'WHERE ID=NOTE_ID' for currently loaded note if editing
     private String mOldTitle;   // used to check if any changes were made when editing note
     private String mOldText;    // used to check if any changes were made when editing note
+
+    private String mAction;     // flag for new note or editing existing note
+    private String mNoteFilter; // contains 'WHERE ID=NOTE_ID' for currently loaded note if editing
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,13 +43,14 @@ public class WriteNoteActivity extends AppCompatActivity {
         //      - We pull the note from the DB using passed in ID from Uri
         Intent intent = getIntent();
         Uri uri = intent.getParcelableExtra(NoteDataProvider.CONTENT_ITEM_TYPE);
-        if(uri == null) {
+        if (uri == null) {
             // brand new note
-            Log.wtf(TAG, "TODO");
+            mAction = Intent.ACTION_INSERT;
         } else {
             // loading in existing note
-            String noteFilter = DBHelper.NOTE_ID + "=" + uri.getLastPathSegment();
-            Cursor cursor = getContentResolver().query(uri, DBHelper.ALL_COLUMNS, noteFilter, null, null);
+            mAction = Intent.ACTION_EDIT;
+            mNoteFilter = DBHelper.NOTE_ID + "=" + uri.getLastPathSegment();
+            Cursor cursor = getContentResolver().query(uri, DBHelper.ALL_COLUMNS, mNoteFilter, null, null);
             if (cursor != null) {
                 cursor.moveToFirst();
                 String title = cursor.getString(cursor.getColumnIndex(DBHelper.NOTE_TITLE));
@@ -59,6 +62,10 @@ public class WriteNoteActivity extends AppCompatActivity {
 
                 mOldTitle = title;
                 mOldText = text;
+
+                mTitleTextView.setText(title);
+                mNoteTextView.setText(text);
+                mNoteTextView.requestFocus();
             }
         }
     }
@@ -74,11 +81,10 @@ public class WriteNoteActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
+                submitCurrentNote();
                 break;
             case R.id.action_clear_current_note:
                 clearCurrentNote();
-                break;
-            case R.id.action_delete_note:
                 break;
             default:
         }
@@ -86,9 +92,64 @@ public class WriteNoteActivity extends AppCompatActivity {
         return true;
     }
 
+    private void submitCurrentNote() {
+        String title = mTitleTextView.getText().toString().trim();
+        String text = mNoteTextView.getText().toString().trim();
+
+        switch (mAction) {
+            case Intent.ACTION_INSERT:
+                if (text.length() == 0) {
+                    setResult(RESULT_CANCELED);
+                } else {
+                    insertCurrentNote(title, text);
+                }
+                break;
+
+            case Intent.ACTION_EDIT:
+                if (text.length() == 0) {
+                    deleteCurrentNote();
+                } else if (text.equals(mOldText) && title.equals(mOldTitle)) {
+                    setResult(RESULT_CANCELED);
+                } else {
+                    updateCurrentNote(title, text);
+                }
+                break;
+
+            default:
+        }
+        finish();
+    }
+
     private void clearCurrentNote() {
         mTitleTextView.setText("");
         mNoteTextView.setText("");
+    }
+
+    private void insertCurrentNote(String noteTitle, String noteText) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.NOTE_TITLE, noteTitle);
+        contentValues.put(DBHelper.NOTE_TEXT, noteText);
+
+        getContentResolver().insert(NoteDataProvider.CONTENT_URI, contentValues);
+        Toast.makeText(WriteNoteActivity.this, R.string.noted_added, Toast.LENGTH_SHORT).show();
+        setResult(RESULT_OK);
+    }
+
+    private void deleteCurrentNote() {
+        getContentResolver().delete(NoteDataProvider.CONTENT_URI, mNoteFilter, null);
+        Toast.makeText(WriteNoteActivity.this, R.string.note_deleted, Toast.LENGTH_SHORT).show();
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    private void updateCurrentNote(String noteTitle, String noteText) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.NOTE_TITLE, noteTitle);
+        contentValues.put(DBHelper.NOTE_TEXT, noteText);
+
+        getContentResolver().update(NoteDataProvider.CONTENT_URI, contentValues, mNoteFilter, null);
+        Toast.makeText(WriteNoteActivity.this, R.string.note_updated, Toast.LENGTH_SHORT).show();
+        setResult(RESULT_OK);
     }
 
     @Override

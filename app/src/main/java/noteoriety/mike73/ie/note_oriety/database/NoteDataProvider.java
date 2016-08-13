@@ -50,7 +50,7 @@ public class NoteDataProvider extends ContentProvider {
                 DBHelper.ALL_COLUMNS,
                 selection,
                 null, null, null, // String[] selectionArgs, String groupBy, String having
-                DBHelper.NOTE_TIMESTAMP + "DESC" // order by time
+                DBHelper.NOTE_TIMESTAMP + " DESC" // order by time
         );
     }
 

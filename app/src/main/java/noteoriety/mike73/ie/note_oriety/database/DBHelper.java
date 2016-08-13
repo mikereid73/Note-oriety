@@ -30,7 +30,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String _SQL_CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + " (" +
                     NOTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    NOTE_TITLE + "TEXT, " +
+                    NOTE_TITLE + " TEXT, " +
                     NOTE_TEXT + " TEXT, " +
                     NOTE_TIMESTAMP + " TEXT default CURRENT_TIMESTAMP" +
                     ")";
