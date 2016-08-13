@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">Note-oriety</string>
-    <string name="enter_title_here">Enter title here...</string>
-    <string name="enter_note_here">Enter note here...</string>
+    <string name="enter_title_here">Enter title here…</string>
+    <string name="enter_note_here">Enter note here…</string>
     <string name="clear_current_note">Clear</string>
-    <string name="delete_current_note">Delete</string>
     <string name="note_deleted">Note deleted</string>
     <string name="noted_added">Note added</string>
-    <string name="icon">icon text blah blah blah</string>
+    <string name="icon">icon text description</string>
     <string name="note_updated">Note updated</string>
     <string name="delete_all_notes">Delete all notes</string>
     <string name="are_you_sure">Are you sure you want to delete all notes?</string>

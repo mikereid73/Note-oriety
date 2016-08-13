@@ -151,14 +151,4 @@ public class WriteNoteActivity extends AppCompatActivity {
         Toast.makeText(WriteNoteActivity.this, R.string.note_updated, Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 }
