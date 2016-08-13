@@ -1,4 +1,4 @@
-package noteoriety.mike73.ie.note_oriety.activity;
+package noteoriety.mike73.ie.noteoriety.activity;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
@@ -19,9 +19,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import noteoriety.mike73.ie.note_oriety.R;
-import noteoriety.mike73.ie.note_oriety.database.NoteDataProvider;
-import noteoriety.mike73.ie.note_oriety.database.NoteorietyCursorAdapter;
+import noteoriety.mike73.ie.noteoriety.R;
+import noteoriety.mike73.ie.noteoriety.database.NoteDataProvider;
+import noteoriety.mike73.ie.noteoriety.database.NoteorietyCursorAdapter;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 

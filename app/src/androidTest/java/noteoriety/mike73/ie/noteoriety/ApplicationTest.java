@@ -1,4 +1,4 @@
-package noteoriety.mike73.ie.note_oriety;
+package noteoriety.mike73.ie.noteoriety;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

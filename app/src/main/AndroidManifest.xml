@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="noteoriety.mike73.ie.note_oriety">
+    package="noteoriety.mike73.ie.noteoriety">
 
     <application
         android:allowBackup="true"
@@ -10,11 +10,11 @@
         android:theme="@style/AppTheme">
 
         <provider
-            android:name=".database.NoteDataProvider"
+            android:name="noteoriety.mike73.ie.noteoriety.database.NoteDataProvider"
             android:authorities="noteoriety.mike73.ie.noteoriety"
             android:exported="false" />
 
-        <activity android:name=".activity.MainActivity">
+        <activity android:name="noteoriety.mike73.ie.noteoriety.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,11 +25,11 @@
         <activity
             android:name=".activity.WriteNoteActivity"
             android:label="My Note"
-            android:parentActivityName=".activity.WriteNoteActivity">
+            android:parentActivityName="noteoriety.mike73.ie.noteoriety.activity.WriteNoteActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainActivity" />
+                android:value="noteoriety.mike73.ie.noteoriety.activity.MainActivity" />
         </activity>
     </application>
 

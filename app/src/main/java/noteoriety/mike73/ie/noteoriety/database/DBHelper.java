@@ -1,4 +1,4 @@
-package noteoriety.mike73.ie.note_oriety.database;
+package noteoriety.mike73.ie.noteoriety.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

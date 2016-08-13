@@ -1,4 +1,4 @@
-package noteoriety.mike73.ie.note_oriety.database;
+package noteoriety.mike73.ie.noteoriety.database;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import noteoriety.mike73.ie.note_oriety.R;
+import noteoriety.mike73.ie.noteoriety.R;
 
 /**
  * Author: Michael Reid

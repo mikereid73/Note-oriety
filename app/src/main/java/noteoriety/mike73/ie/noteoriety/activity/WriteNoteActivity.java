@@ -1,4 +1,4 @@
-package noteoriety.mike73.ie.note_oriety.activity;
+package noteoriety.mike73.ie.noteoriety.activity;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,9 +13,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import noteoriety.mike73.ie.note_oriety.R;
-import noteoriety.mike73.ie.note_oriety.database.DBHelper;
-import noteoriety.mike73.ie.note_oriety.database.NoteDataProvider;
+import noteoriety.mike73.ie.noteoriety.R;
+import noteoriety.mike73.ie.noteoriety.database.DBHelper;
+import noteoriety.mike73.ie.noteoriety.database.NoteDataProvider;
 
 /**
  * Author: Michael Reid
@@ -117,6 +117,11 @@ public class WriteNoteActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        submitCurrentNote();
     }
 
     private void submitCurrentNote() {

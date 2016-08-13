@@ -1,4 +1,4 @@
-package noteoriety.mike73.ie.note_oriety.database;
+package noteoriety.mike73.ie.noteoriety.database;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -69,12 +69,12 @@ public class NoteDataProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         return mDatabase.delete(DBHelper.TABLE_NAME, selection, selectionArgs);
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         return mDatabase.update(DBHelper.TABLE_NAME, values, selection, selectionArgs);
     }
 }
