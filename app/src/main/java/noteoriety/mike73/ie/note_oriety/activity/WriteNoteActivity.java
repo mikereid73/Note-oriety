@@ -1,6 +1,7 @@
 package noteoriety.mike73.ie.note_oriety.activity;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,8 +23,8 @@ import noteoriety.mike73.ie.note_oriety.database.NoteDataProvider;
  */
 public class WriteNoteActivity extends AppCompatActivity {
 
-    private EditText mTitleTextView;
-    private EditText mNoteTextView;
+    private EditText mTitleEditText;
+    private EditText mNoteTextEditText;
 
     private String mOldTitle;   // used to check if any changes were made when editing note
     private String mOldText;    // used to check if any changes were made when editing note
@@ -35,8 +37,8 @@ public class WriteNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_note);
 
-        mTitleTextView = (EditText) findViewById(R.id.titleEditText);
-        mNoteTextView = (EditText) findViewById(R.id.noteEditText);
+        mTitleEditText = (EditText) findViewById(R.id.titleEditText);
+        mNoteTextEditText = (EditText) findViewById(R.id.noteEditText);
 
         // Check if any data was passed (note Uri).
         // If there was, then assume we are editing an existing note
@@ -46,6 +48,11 @@ public class WriteNoteActivity extends AppCompatActivity {
         if (uri == null) {
             // brand new note
             mAction = Intent.ACTION_INSERT;
+
+            // Show keyboard
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(mTitleEditText, InputMethodManager.SHOW_IMPLICIT);
+            mTitleEditText.requestFocus();
         } else {
             // loading in existing note
             mAction = Intent.ACTION_EDIT;
@@ -54,19 +61,22 @@ public class WriteNoteActivity extends AppCompatActivity {
             if (cursor != null) {
                 cursor.moveToFirst();
                 String title = cursor.getString(cursor.getColumnIndex(DBHelper.NOTE_TITLE));
-                mTitleTextView.setText(title);
+                mTitleEditText.setText(title);
                 String text = cursor.getString(cursor.getColumnIndex(DBHelper.NOTE_TEXT));
-                mNoteTextView.setText(text);
+                mNoteTextEditText.setText(text);
 
                 cursor.close();
 
                 mOldTitle = title;
                 mOldText = text;
 
-                mTitleTextView.setText(title);
-                mNoteTextView.setText(text);
-                mNoteTextView.requestFocus();
+                mTitleEditText.setText(title);
+                mNoteTextEditText.setText(text);
             }
+            // Show keyboard
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(mNoteTextEditText, InputMethodManager.SHOW_IMPLICIT);
+            mNoteTextEditText.requestFocus();
         }
     }
 
@@ -93,8 +103,8 @@ public class WriteNoteActivity extends AppCompatActivity {
     }
 
     private void submitCurrentNote() {
-        String title = mTitleTextView.getText().toString().trim();
-        String text = mNoteTextView.getText().toString().trim();
+        String title = mTitleEditText.getText().toString().trim();
+        String text = mNoteTextEditText.getText().toString().trim();
 
         switch (mAction) {
             case Intent.ACTION_INSERT:
@@ -121,8 +131,8 @@ public class WriteNoteActivity extends AppCompatActivity {
     }
 
     private void clearCurrentNote() {
-        mTitleTextView.setText("");
-        mNoteTextView.setText("");
+        mTitleEditText.setText("");
+        mNoteTextEditText.setText("");
     }
 
     private void insertCurrentNote(String noteTitle, String noteText) {
